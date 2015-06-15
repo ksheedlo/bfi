@@ -1,0 +1,4 @@
+*.dSYM
+*.h.gch
+*.o
+bfi
