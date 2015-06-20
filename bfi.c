@@ -703,6 +703,7 @@ int main(int argc, char **argv) {
     perror("bfi.main");
     return 1;
   }
+  memset(memory, 0, 32768 * sizeof(*memory));
 
   _bfi_debug("program: %s\n", program);
   err = bf_parse(&ast, program);
