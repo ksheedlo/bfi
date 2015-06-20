@@ -1,11 +1,26 @@
+CC=gcc
+CFLAGS=-Wall -O2 -DNDEBUG -std=c99
+
 .PHONY: all
 all: bfi
 
-bf_vector.o: bf_vector.c bf_vector.h
-	gcc -Wall -O2 -DNDEBUG -std=c99 -c bf_vector.c
+ast.o: ast.c ast.h
+	gcc $(CFLAGS) -c $<
 
-bfi: bf_vector.o bfi.c bfi.h
-	gcc -Wall -O2 -DNDEBUG -std=c99 bfi.c bf_vector.o -o bfi
+bf_vector.o: bf_vector.c bf_vector.h
+	gcc $(CFLAGS) -c $<
+
+logging.o: ast.o logging.c logging.h
+	gcc $(CFLAGS) -c logging.c
+
+parser.o: ast.o bf_vector.o parser.c parser.h
+	gcc $(CFLAGS) -c parser.c
+
+passes.o: ast.o bf_vector.o logging.o passes.c passes.h
+	gcc $(CFLAGS) -c passes.c
+
+bfi: ast.o bf_vector.o logging.o parser.o passes.o bfi.c bfi.h
+	gcc $(CFLAGS) bfi.c bf_vector.o ast.o logging.o parser.o passes.o -o bfi
 
 .PHONY: clean
 clean:
