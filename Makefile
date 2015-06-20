@@ -19,8 +19,11 @@ parser.o: ast.o bf_vector.o parser.c parser.h
 passes.o: ast.o bf_vector.o logging.o passes.c passes.h
 	gcc $(CFLAGS) -c passes.c
 
-bfi: ast.o bf_vector.o logging.o parser.o passes.o bfi.c bfi.h
-	gcc $(CFLAGS) bfi.c bf_vector.o ast.o logging.o parser.o passes.o -o bfi
+file_reader.o: file_reader.c file_reader.h
+	gcc $(CFLAGS) -c file_reader.c
+
+bfi: ast.o bf_vector.o logging.o parser.o passes.o file_reader.o bfi.c bfi.h
+	gcc $(CFLAGS) bfi.c bf_vector.o ast.o logging.o parser.o passes.o file_reader.o -o bfi
 
 .PHONY: clean
 clean:

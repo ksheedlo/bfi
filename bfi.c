@@ -48,36 +48,16 @@ int main(int argc, char **argv) {
   char *program;
   int32_t err;
   bf_ast ast, optimized;
-  int fd;
-  FILE *code;
-  struct stat pstats;
 
   if (argc < 2) {
     usage(argv[0]);
     return 0;
   }
 
-  if ((fd = open(argv[1], O_RDONLY)) == -1) {
+  if ((program = bf_read_file(argv[1])) == NULL) {
     perror("bfi.main");
     return 3;
   }
-  if (fstat(fd, &pstats) == -1) {
-    perror("bfi.main");
-    return 4;
-  }
-
-  if ((program = malloc(pstats.st_size)) == NULL) {
-    perror("bfi.main");
-    return 1;
-  }
-
-  if ((code = fdopen(fd, "r")) == NULL) {
-    perror("bfi.main");
-    return 2;
-  }
-
-  fread(program, pstats.st_size, 1, code);
-  fclose(code);
 
   if ((memory = malloc(32768 * sizeof(*memory))) == NULL) {
     perror("bfi.main");

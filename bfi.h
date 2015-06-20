@@ -12,6 +12,7 @@
 #include "logging.h"
 #include "parser.h"
 #include "passes.h"
+#include "file_reader.h"
 
 intptr_t bf_interpret(bf_ast *ast, uint8_t *memory, intptr_t dptr);
 
