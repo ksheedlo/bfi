@@ -13,6 +13,6 @@
 #include "parser.h"
 #include "passes.h"
 
-int32_t bf_interpret(bf_ast *ast, int32_t *memory, int32_t dptr);
+intptr_t bf_interpret(bf_ast *ast, uint8_t *memory, intptr_t dptr);
 
 #endif

@@ -1,13 +1,13 @@
 #include "bfi.h"
 
-int32_t bf_interpret(bf_ast *ast, int32_t *memory, int32_t dptr) {
+intptr_t bf_interpret(bf_ast *ast, uint8_t *memory, intptr_t dptr) {
   for (int32_t i = 0; i < ast->n_nodes; i++) {
     switch (ast->nodes[i].type) {
       case BF_INC:
-        memory[dptr] += (int32_t)(ast->nodes[i].data);
+        memory[dptr] = (uint8_t)(memory[dptr] + (intptr_t)(ast->nodes[i].data));
         break;
       case BF_PTR:
-        dptr += (int32_t)(ast->nodes[i].data);
+        dptr += (intptr_t)(ast->nodes[i].data);
         break;
       case BF_PUT:
         putchar(memory[dptr]);
@@ -44,7 +44,7 @@ void usage(char *name) {
 }
 
 int main(int argc, char **argv) {
-  int32_t *memory;
+  uint8_t *memory;
   char *program;
   int32_t err;
   bf_ast ast, optimized;
