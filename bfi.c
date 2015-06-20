@@ -403,7 +403,7 @@ int32_t bf_pass_detect_scan_right(bf_ast *src, bf_ast *dest) {
         if (scan_left_expr->n_nodes == 1 &&
           scan_left_expr->nodes[0].type == BF_PTR &&
           (int32_t)(scan_left_expr->nodes[0].data) == 1) {
-          // This is indeed a scan left expression. Push a ScanLeft node.
+          // This is indeed a scan right expression. Push a ScanRight node.
           node->type = BF_SCAN_RIGHT;
           node->data = NULL;
           bf_vector_push(&nodes, node);
